@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>List View (コンポーネント使用版)</title>
+</head>
+
+<body>
+  <script type="text/x-template" id="list-view-template">
+    <ul>
+      <li v-for="item in doFilterName">{{item.name}}...{{item.description}}</li>
+    </ul>
+  </script>
+
+  <script type="text/x-template" id="list-view-template2">
+    <ul>
+      <li v-for="(item, index) in doFilterName " v-bind:index="index">
+        <button @click="showPgName(index)">{{item.name}}</button>...{{item.description}}</li>
+    </ul>
+  </script>
+
+  <a href="index.html">インデックスに戻る</a>
+  <div id="seachItems">
+    <input type="text" v-model="filterText">
+    <button type="button" @click="changeTemplete1">テンプレートを1に</button>
+    <button type="button" @click="changeTemplete2">テンプレートを2に</button>
+    <list-view :data="items" :filter-key="filterText" v-if="template == 'template1'"></list-view>
+    <list-view2 :data="items" :filter-key="filterText" v-if="template == 'template2'  "></list-view2>
+  </div>
+</body>
+<!--<script type="text/javascript" src="../js/bundle.js"></script>-->
+<script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript" src="../js/view.1.js"></script>
+
+</html>

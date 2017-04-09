@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .type-select {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .type-select>li {
+      margin-right: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html">インデックスに戻る</a>
+  <div id="seachItems">
+    <input type="text" v-model="filterText" placeholder="プログラム言語を入力">
+    <button type="button" @click="filterTextClear">初期化</button>
+    <ul class="type-select">
+      <li>
+        <input type="radio" id="statusAll" value="all" v-model="type">
+        <label for="statusAll">ALL</label>
+      </li>
+      <li>
+        <input type="radio" id="statusCompiler" value="compiler" v-model="type">
+        <label for="statusCompiler">compiler</label>
+      </li>
+      <li>
+        <input type="radio" id="statusScript" value="script" v-model="type">
+        <label for="statusScript">script</label>
+      </li>
+    </ul>
+
+    <ul>
+      <li v-for="item in doFilterName">{{item.name}}
+        <button @click="showPgName">実行</button>
+      </li>
+    </ul>
+  </div>
+</body>
+<!--<script type="text/javascript" src="../js/bundle.js"></script>-->
+<script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript" src="../js/view.js"></script>
+
+</html>
