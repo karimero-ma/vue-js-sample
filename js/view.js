@@ -18,8 +18,6 @@ new Vue({
 
   computed: {
     doFilterName: function () {
-      console.log(this.filterText);
-
       for (var item of this.items) {
         if (this.filterText === '') {
           item.match = true;
