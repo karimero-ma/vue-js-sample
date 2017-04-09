@@ -9,19 +9,16 @@
 </head>
 
 <body>
-  <!--
-  <input type="text">
-  <ul id="seachItems">
-    <li id="searchItem" v-if=""></li>
-    <li id="searchItem" v-if=""></li>
-    <li id="searchItem" v-if=""></li>
-    <li id="searchItem" v-if=""></li>
-  </ul>-->
-
-  <div id="app">
-    {{ message }}
+  <div id="seachItems">
+    <input type="text" v-model="filterText">
+    <ul>
+      <li v-for="item in doFilterName" v-if="item.match">{{item.name}}</li>
+      <!--<li v-for="item in items">{{item.name}}</li>-->
+    </ul>
   </div>
 </body>
-<script type="text/javascript" src="../js/bundle.js"></script>
+<!--<script type="text/javascript" src="../js/bundle.js"></script>-->
+<script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript" src="../js/view.js"></script>
 
 </html>

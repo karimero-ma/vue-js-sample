@@ -1,7 +1,34 @@
-var Vue = require('vue')
+//var Vue = require('vue')
 new Vue({
-  el: '#app',
+  el: '#seachItems',
   data: {
-    message: 'Hello,Vue.js!'
+    filterText: '',
+    items: [
+      { name: 'Java', match: true },
+      { name: 'C', match: false },
+      { name: 'PHP', match: true },
+      { name: 'Ruby', match: true },
+      { name: 'Perl', match: false },
+      { name: 'JavaScript', match: true },
+      { name: 'Python', match: true },
+      { name: 'C#', match: false },
+      { name: 'Visual Basic', match: true },
+    ]
+  },
+
+  computed: {
+    doFilterName: function () {
+      console.log(this.filterText);
+
+      for (var item of this.items) {
+        if (this.filterText === '') {
+          item.match = true;
+        } else {
+          var upperName = item.name.toUpperCase();
+          item.match = upperName.indexOf(this.filterText.toUpperCase()) >= 0;
+        }
+      }
+      return this.items;
+    }
   }
 });
