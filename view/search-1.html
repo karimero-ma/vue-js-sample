@@ -17,6 +17,10 @@
     .type-select>li {
       margin-right: 20px;
     }
+    
+    .highlight {
+      background-color: yellow;
+    }
   </style>
 </head>
 
@@ -24,7 +28,6 @@
   <a href="index.html">インデックスに戻る</a>
   <div id="seachItems">
     <input type="text" v-model="filterText" placeholder="プログラム言語を入力">
-    <button type="button" @click="filterTextClear">初期化</button>
     <ul class="type-select">
       <li>
         <input type="radio" id="statusAll" value="all" v-model="type">
@@ -41,14 +44,14 @@
     </ul>
 
     <ul>
-      <li v-for="item in doFilterName">{{item.name}}
-        <button @click="showPgName">実行</button>
+      <li v-for="item in doFilterName" v-html="highlight(item)">
       </li>
     </ul>
   </div>
 </body>
 <!--<script type="text/javascript" src="../js/bundle.js"></script>-->
 <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
+<script type="text/javascript" src="../js/StringEscapeUtils.js"></script>
 <script type="text/javascript" src="../js/view.js"></script>
 
 </html>

@@ -1,4 +1,21 @@
 //var Vue = require('vue')
+var highlight = function (text, words, tag) {
+
+  // Default tag if no tag is provided
+  tag = tag || 'span';
+
+  var len = words.length
+  for (var i = 0; i < len; i++) {
+    // Global regex to highlights all matches
+    var re = new RegExp(StringEscapeUtils.escapeRegExp(words[i]), 'gi');
+    // var re = new RegExp(words[i], 'gi');
+    if (re.test(text)) {
+      text = text.replace(re, '<' + tag + ' class="highlight">$&</' + tag + '>');
+    }
+  }
+  return text;
+}
+
 
 new Vue({
   el: '#seachItems',
@@ -15,6 +32,8 @@ new Vue({
       { name: 'Python', type: 'script' },
       { name: 'C#', type: 'compiler' },
       { name: 'Visual Basic', type: 'compiler' },
+      { name: 'Visual ^Basic', type: 'compiler' },
+      { name: 'Visual ¥¥Basic', type: 'compiler' },
     ]
   },
 
@@ -22,19 +41,35 @@ new Vue({
     doFilterName: function () {
       var type = this.type;
       var filterText = this.filterText;
-      return this.items.filter(function (item) {
-        var filter = item.name.toUpperCase().indexOf(filterText.toUpperCase()) > -1;
+      var items = this.items;
 
-        var isType = type === 'all' || type === item.type;
-        return filter && isType;
+      if (!filterText || filterText === '') {
+        return items;
+      }
+      return items.filter(function (item) {
+        var before = item.name;
+        var after = highlight(item.name, filterText.split(' '));
+        if (before !== after) {
+          item.highlight = after;
+          return true;
+        } else {
+          return false;
+        }
       })
-    }
-  },
+    },
 
+  },
   methods: {
     filterTextClear: function () {
       this.filterText = '';
       this.type = 'all';
+    },
+    highlight: function (item) {
+      if (this.filterText.length > 0 && item.highlight && item.highlight.length > 0) {
+        return item.highlight;
+      } else {
+        return item.name;
+      }
     }
   }
 });
