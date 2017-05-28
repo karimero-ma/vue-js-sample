@@ -1,17 +1,13 @@
-//var Vue = require('vue')
 var highlight = function (text, words, tag) {
-
-  // Default tag if no tag is provided
+  text = StringEscapeUtils.escapeHtml(text);
   tag = tag || 'span';
 
-  var len = words.length
-  for (var i = 0; i < len; i++) {
-    // Global regex to highlights all matches
-    var re = new RegExp(StringEscapeUtils.escapeRegExp(words[i]), 'gi');
-    // var re = new RegExp(words[i], 'gi');
-    if (re.test(text)) {
-      text = text.replace(re, '<' + tag + ' class="highlight">$&</' + tag + '>');
-    }
+  var re = new RegExp(
+    StringEscapeUtils.escapeHtml(
+      StringEscapeUtils.escapeRegExp(words)), 'gi');
+
+  if (re.test(text)) {
+    text = text.replace(re, '<' + tag + ' class="highlight">$&</' + tag + '>');
   }
   return text;
 }
@@ -33,7 +29,10 @@ new Vue({
       { name: 'C#', type: 'compiler' },
       { name: 'Visual Basic', type: 'compiler' },
       { name: 'Visual ^Basic', type: 'compiler' },
+      { name: 'Visual *Basic', type: 'compiler' },
+      { name: 'Visual ?Basic', type: 'compiler' },
       { name: 'Visual ¥¥Basic', type: 'compiler' },
+      { name: '<a href="http://yahoo.co.jp">yahoo</a>', type: 'compiler' },
     ]
   },
 
@@ -46,18 +45,18 @@ new Vue({
       if (!filterText || filterText === '') {
         return items;
       }
+
       return items.filter(function (item) {
-        var before = item.name;
-        var after = highlight(item.name, filterText.split(' '));
+        var before = StringEscapeUtils.escapeHtml(item.name);
+        var after = highlight(item.name, filterText);
         if (before !== after) {
           item.highlight = after;
           return true;
         } else {
           return false;
         }
-      })
+      });
     },
-
   },
   methods: {
     filterTextClear: function () {
@@ -68,7 +67,7 @@ new Vue({
       if (this.filterText.length > 0 && item.highlight && item.highlight.length > 0) {
         return item.highlight;
       } else {
-        return item.name;
+        return StringEscapeUtils.escapeHtml(item.name);
       }
     }
   }
