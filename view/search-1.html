@@ -44,7 +44,8 @@
     </ul>
 
     <ul>
-      <li v-for="item in doFilterName" v-html="highlight(item)"></li>
+      <!--<li v-for="item in doFilterName" v-html="highlight(item)"></li>-->
+      <li v-for="item in items" v-if="isMatch(item)" v-html="highlight(item)"></li>
     </ul>
   </div>
 </body>

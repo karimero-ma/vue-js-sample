@@ -37,31 +37,29 @@ new Vue({
   },
 
   computed: {
-    doFilterName: function () {
-      var type = this.type;
-      var filterText = this.filterText;
-      var items = this.items;
 
-      if (!filterText || filterText === '') {
-        return items;
-      }
-
-      return items.filter(function (item) {
-        var before = StringEscapeUtils.escapeHtml(item.name);
-        var after = highlight(item.name, filterText);
-        if (before !== after) {
-          item.highlight = after;
-          return true;
-        } else {
-          return false;
-        }
-      });
-    },
   },
   methods: {
     filterTextClear: function () {
       this.filterText = '';
       this.type = 'all';
+    },
+    isMatch: function (item) {
+      var type = this.type;
+      var filterText = this.filterText;
+
+      if (!filterText || filterText === '') {
+        return true;
+      }
+
+      var before = StringEscapeUtils.escapeHtml(item.name);
+      var after = highlight(item.name, filterText);
+      if (before !== after) {
+        item.highlight = after;
+        return true;
+      } else {
+        return false;
+      }
     },
     highlight: function (item) {
       if (this.filterText.length > 0 && item.highlight && item.highlight.length > 0) {
